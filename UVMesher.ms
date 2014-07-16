@@ -1,6 +1,8 @@
 struct faceMapInfo (ID, nbVerts, Verts)
 struct vertMapInfo (ID, Pos)
 
+holder = selection[1]
+
 fn compareFN v1 v2 =
 (
 	local d = v1.ID-v2.ID
@@ -52,3 +54,23 @@ for i in faces do
 	)
 	ep.createFace indices select:false
 )
+
+fn CallbackFn1 ev nd = 
+(
+	cond1 = (nd[1])
+	cond2 = (((GetHandleByAnim ep) as Integer))
+	if cond1 == cond2 then
+	(
+		changedVerts = polyop.getVertSelection ep
+		changedVerts = changedVerts as array
+		for Vert in changedVerts do
+		(
+			Pos = polyop.getVert ep Vert
+			polyop.setMapVert holder 1 Vert Pos
+		)
+		un = Unwrap_UVW ()
+		addmodifier holder un
+		collapseStack holder
+	)
+)
+callbackItem = NodeEventCallback mouseUp:true delay:1000 geometrychanged:CallbackFn1
